@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "516103426490",
+    "project_id": "ruhack-93d5e",
+    "storage_bucket": "ruhack-93d5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516103426490:android:f119869dbcd4473c274d83",
+        "android_client_info": {
+          "package_name": "com.example.ruhack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516103426490-8h99p9qv91374bk17f5onc5vm3kfpqpu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ruhack",
+            "certificate_hash": "b77d90fea84574ffea350e271905c0df533b9f12"
+          }
+        },
+        {
+          "client_id": "516103426490-t3fa6ul4onpi1s928lk8f1jpc0hb3q1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQP509ck2Gh60y2BGA3L_0C5Gm8Muz0I0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516103426490-t3fa6ul4onpi1s928lk8f1jpc0hb3q1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

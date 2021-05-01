@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'profile.dart';
+import 'package:ruhack/Authenticate.dart';
+import 'package:ruhack/Register.dart';
+import 'package:ruhack/SignIn.dart';
+import 'package:ruhack/profile.dart';
 
+<<<<<<< HEAD
 // void main() => runApp(MaterialApp(
 //     theme: ThemeData(
 //       // theme
@@ -78,3 +81,20 @@ class secondTestPage extends StatelessWidget {
     );
   }
 }
+=======
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Authenticate(),
+    );
+  }
+}
+
+>>>>>>> 6a8ea192c3399db3bc226a05bc1c04740a32aa35
