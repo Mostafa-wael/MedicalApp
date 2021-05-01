@@ -22,22 +22,11 @@ class _profileState extends State<Profile> {
     notes.add("2");
     notes.add("3");
     //********************************
-    // theme
-    var darkThemeDataColor = Colors.blue[900]; // header color
-    var darkThemeHeaderColor = Colors.grey; // data color
-    var darkThemebackgroundColor = Colors.grey[900]; // background color
-    var darkThemeScaffoldColor =
-        Colors.grey[100]; // text in the appBar and the floatingActionButton
     // text style
-    var dataTextStyle = TextStyle(
-      letterSpacing: 2.0,
-      color: darkThemeDataColor,
-      fontSize: 30.0,
-      fontFamily: 'Redressed',
-    );
-    var headerTextStyle =
-        TextStyle(letterSpacing: 2.0, color: darkThemeHeaderColor);
-    var scaffoldTextStyle = TextStyle(color: darkThemeScaffoldColor);
+    var dataTextStyle = Theme.of(context).textTheme.bodyText2;
+    var headerTextStyle = Theme.of(context).textTheme.subtitle2;
+    var scaffoldTextStyle = Theme.of(context).textTheme.headline1;
+
     // profile photo
     var circleAvatar = CircleAvatar(
       backgroundImage: AssetImage('assets/profile.png'),
@@ -86,13 +75,14 @@ class _profileState extends State<Profile> {
       style: dataTextStyle,
     );
     //********************************
-    var scaffold = Scaffold(
-      backgroundColor: darkThemebackgroundColor,
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       //************
       appBar: AppBar(
+        leading: Icon(Icons.medical_services),
         title: Text('Medical App', style: scaffoldTextStyle),
         centerTitle: true,
-        backgroundColor: darkThemeDataColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
       ),
       //************
@@ -126,7 +116,7 @@ class _profileState extends State<Profile> {
       ),
       //************
       floatingActionButton: FloatingActionButton(
-        backgroundColor: darkThemeDataColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         //************
         child: Text(
           '!',
@@ -140,14 +130,14 @@ class _profileState extends State<Profile> {
               builder: (BuildContext context) => new AlertDialog(
                     title: new Icon(
                       Icons.all_inclusive_sharp,
-                      color: darkThemeDataColor,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     content: new Text(
                       'YOU ARE GREAT!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         letterSpacing: 2.0,
-                        color: darkThemeDataColor,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -155,7 +145,7 @@ class _profileState extends State<Profile> {
                       new IconButton(
                           icon: new Icon(
                             Icons.close,
-                            color: darkThemeDataColor,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -165,6 +155,5 @@ class _profileState extends State<Profile> {
         },
       ),
     );
-    return scaffold;
   }
 }
