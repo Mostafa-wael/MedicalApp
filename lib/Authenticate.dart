@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ruhack/Register.dart';
-import 'package:ruhack/SignIn.dart';
-
+import 'Register.dart';
+import 'SignIn.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -13,15 +12,16 @@ class _AuthenticateState extends State<Authenticate> {
 
   @override
   Widget build(BuildContext context) {
-    return toggle?Register(toggleView: changePage,):SignIn(toggleView: changePage);
+    return toggle
+        ? Register(
+            toggleView: changePage,
+          )
+        : SignIn(toggleView: changePage);
   }
 
-  void changePage(){
+  void changePage() {
     setState(() {
       toggle = !toggle;
     });
   }
-
-
-
 }
