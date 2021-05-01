@@ -1,4 +1,4 @@
-# ru_hackathon
+# ruhack
 
 A new Flutter project.
 
