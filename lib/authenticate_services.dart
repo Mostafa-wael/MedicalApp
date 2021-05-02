@@ -13,8 +13,9 @@ class AuthenticateSerivice {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await DatabaseService(userID:result.user.uid).addUserData(first, last, phone, email, age, gender);
-      await DatabaseService(userID: result.user.uid).addMedicalRecord("test", "test", ["test","test","test"]);
+      DatabaseService db = DatabaseService();
+      await db.addUserData(result.user.uid,first, last, phone, email, age, gender);
+      await db.addMedicalRecord(result.user.uid,"test", "test", ["test","test","test"]);
       return result.user;
     } catch (e) {
       print(e.toString());

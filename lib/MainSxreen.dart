@@ -8,6 +8,6 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return user!=null?Profile():Authenticate();
+    return user!=null?Profile(userID:user.uid):Authenticate();
   }
 }

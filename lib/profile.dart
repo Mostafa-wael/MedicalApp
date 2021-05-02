@@ -1,18 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ruhack/database_services.dart';
 import 'MedicalHistory.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:ruhack/authenticate_services.dart';
 
 class Profile extends StatefulWidget {
+  final String userID;
+  Profile({this.userID});
+
   @override
   _profileState createState() => _profileState();
 }
 
 class _profileState extends State<Profile> {
   // data
+  //Getting data from the database
   final String name = "Mostafa Wael";
   final int age = 21;
   final String phoneNumber = "011";
