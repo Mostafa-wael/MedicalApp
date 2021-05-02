@@ -72,14 +72,8 @@ class DatabaseService{
   Future<QuerySnapshot> getMedicalRecords(String userID) async
   {
     var cRef = patientCollection.doc(userID).collection('Medical History');
-    dynamic result;
-    await cRef.get().then((collection) => (){
-      result = collection;
-    }).catchError((onError) =>(){
-      print(onError.toString());
-      result = null;
-    });
-    return result;
+    QuerySnapshot query = await cRef.get();
+    return query;
   }
 
 }
