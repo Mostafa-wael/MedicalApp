@@ -56,22 +56,19 @@ class _profileState extends State<Profile> {
       style: headerTextStyle,
     );
     // data
-    Widget TextTemp(String text)
-    {
+    Widget textData(String text) {
       return Text(text, style: dataTextStyle);
     }
-    var ageData = Text(
-      age.toString(),
-      style: dataTextStyle,
-    );
-    var phoneNumberData = Text(
-      phoneNumber,
-      style: dataTextStyle,
-    );
-    var genderData = Text(
-      gender,
-      style: dataTextStyle,
-    );
+
+    Widget medicalHistoryButton(String text, Function function) {
+      return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).scaffoldBackgroundColor),
+          child:
+              Text(text, style: TextStyle(fontSize: 12, color: Colors.white)),
+          onPressed: () => function());
+    }
+
     //********************************
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -94,83 +91,56 @@ class _profileState extends State<Profile> {
       ),
       //************
       body: FutureBuilder<DocumentSnapshot>(
-
         future: db.getUserData(userID),
-        builder: (context,AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if(snapshot.hasData)
-            {
-              Map<String,dynamic> data = snapshot.data.data();
-              return ListView(
-                padding: const EdgeInsets.all(8),
-                children: [
-                  Center(
-                    child: circleAvatar,
-                  ),
-                  nameHeader,
-                  SizedBox(height: 10.0),
-                  TextTemp(data["first_name"] + " " + data["last_name"]),
-                  SizedBox(height: 20.0),
-                  ageHeader,
-                  SizedBox(height: 10.0),
-                  TextTemp(data['age'].toString()),
-                  SizedBox(height: 20.0),
-                  phoneNumberHeader,
-                  SizedBox(height: 10.0),
-                  TextTemp(data["phone_num"].toString()),
-                  SizedBox(height: 20.0),
-                  genderHeader,
-                  SizedBox(height: 10.0),
-                  TextTemp(data['gender']),
-                  SizedBox(height: 20.0),
-                ],
-              );
-            }
-          else return Text('loading');
-
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasData) {
+            Map<String, dynamic> data = snapshot.data.data();
+            return ListView(
+              padding: const EdgeInsets.all(8),
+              children: [
+                Center(
+                  child: circleAvatar,
+                ),
+                nameHeader,
+                SizedBox(height: 10.0),
+                textData(data["first_name"] + " " + data["last_name"]),
+                SizedBox(height: 20.0),
+                ageHeader,
+                SizedBox(height: 10.0),
+                textData(data['age'].toString()),
+                SizedBox(height: 20.0),
+                phoneNumberHeader,
+                SizedBox(height: 10.0),
+                textData(data["phone_num"].toString()),
+                SizedBox(height: 20.0),
+                genderHeader,
+                SizedBox(height: 10.0),
+                textData(data['gender']),
+                SizedBox(height: 20.0),
+                medicalHistoryButton(
+                    "My Medical History",
+                    () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => History()))
+                        }),
+                SizedBox(height: 20.0),
+                medicalHistoryButton(
+                    "another One Medical History",
+                    () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => History()))
+                        }),
+              ],
+            );
+          } else
+            return Text('loading');
         },
-
-
       ),
       //************
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        //************
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => History()),
-          );
-
-          // setState(() {});
-          // showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) => new AlertDialog(
-          //           title: new Icon(
-          //             Icons.all_inclusive_sharp,
-          //             color: Theme.of(context).scaffoldBackgroundColor,
-          //           ),
-          //           content: new Text(
-          //             'YOU ARE GREAT!',
-          //             textAlign: TextAlign.center,
-          //             style: TextStyle(
-          //               letterSpacing: 2.0,
-          //               color: Theme.of(context).scaffoldBackgroundColor,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           actions: <Widget>[
-          //             new IconButton(
-          //                 icon: new Icon(
-          //                   Icons.close,
-          //                   color: Theme.of(context).scaffoldBackgroundColor,
-          //                 ),
-          //                 onPressed: () {
-          //                   Navigator.pop(context);
-          //                 })
-          //           ],
-          //         ));
-        },
-      ),
     );
   }
 }
