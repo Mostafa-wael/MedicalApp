@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart';
 
 class DatabaseService{
@@ -30,17 +31,25 @@ class DatabaseService{
 
   }
 
-  Future<Map<String,dynamic>> getUserData(String userID)async
+  Future<DocumentSnapshot> getUserData(String userID)async
   {
     var docRef = patientCollection.doc(userID);
-    Map<String,dynamic> result;
+
+   var doc = await docRef.get();
+   /*
     await docRef.get().then((doc) => (){
-      if(doc.exists) result = doc.data();
+      print(doc);
+      if(doc.exists) result = doc; else result = null;
+      print(doc.data()['first_name']);
     }).catchError((error) => () {
       print(error.toString());
+      result = null;
     }
+
+
     );
-    return result;
+    */
+    return doc;
   }
 
   // Function used to add a user medical record
@@ -63,14 +72,8 @@ class DatabaseService{
   Future<QuerySnapshot> getMedicalRecords(String userID) async
   {
     var cRef = patientCollection.doc(userID).collection('Medical History');
-    dynamic result;
-    await cRef.get().then((collection) => (){
-      result = collection;
-    }).catchError((onError) =>(){
-      print(onError.toString());
-      result = null;
-    });
-    return result;
+    QuerySnapshot query = await cRef.get();
+    return query;
   }
 
 }
