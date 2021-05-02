@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Receipt.dart';
 import 'ReceiptCard.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:ruhack/SignIn.dart';
 import 'package:ruhack/authenticate_services.dart';
+import 'database_services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AddHistory extends StatefulWidget {
@@ -21,6 +23,7 @@ class _AddHistoryState extends State<AddHistory> {
   TextEditingController descriptionconrtoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    String Uid = Provider.of<User>(context).uid;
     return Scaffold(
       appBar:  AppBar(
         title: Text(
@@ -89,6 +92,7 @@ class _AddHistoryState extends State<AddHistory> {
               ),
               SizedBox(height: 40),
               TextFormField(
+                controller: descriptionconrtoller,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     hintStyle: TextStyle(
@@ -103,6 +107,12 @@ class _AddHistoryState extends State<AddHistory> {
                     )),
               ),
               SizedBox(height: 40),
+              TextButton(
+                child: Text("Submit"),
+                  onPressed: () async {
+                   DatabaseService().addMedical(Uid, titleconrtoller.text, dateconrtoller.text, descriptionconrtoller.text);
+                  },
+              )
             ],
           ),
         ),

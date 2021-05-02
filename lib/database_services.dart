@@ -30,6 +30,25 @@ class DatabaseService{
 
 
   }
+  Future addMedical(String userID,String Title,String date, String description) async
+  {
+    try {
+      return await patientCollection.doc(userID).collection("MedicalHistory").doc(userID).set({
+        "Date": date,
+        "Title": Title,
+        "description": description,
+      });
+
+    }
+    catch(e)
+    {
+      print(e.toString());
+      return null;
+    }
+
+
+  }
+
 
   Future<DocumentSnapshot> getUserData(String userID)async
   {
