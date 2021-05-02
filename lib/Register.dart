@@ -9,7 +9,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   // ignore: non_constant_identifier_names
-  String first_name, last_name, email, password, confirm_pass, phone_number;
+  String first_name, last_name, email, password, confirm_pass, phone_number, age, gender = 'Male';
   bool visible = true;
   final _auth = AuthenticateSerivice();
   final _formkey = GlobalKey<FormState>();
@@ -18,6 +18,14 @@ class _RegisterState extends State<Register> {
     // headers
     var emailHeader = Text(
       'Email',
+      style: Theme.of(context).textTheme.subtitle2,
+    );
+    var ageHeader = Text(
+      'Age',
+      style: Theme.of(context).textTheme.subtitle2,
+    );
+    var genderHeader = Text(
+      'Gender',
       style: Theme.of(context).textTheme.subtitle2,
     );
     var passwordHeader = Text(
@@ -160,6 +168,46 @@ class _RegisterState extends State<Register> {
             borderSide: BorderSide(width: 2, color: Colors.red),
           )),
     );
+
+    var getAge = TextFormField(
+      style: TextStyle(color: Colors.black),
+      keyboardType: TextInputType.number,
+      validator: (val) =>
+      int.tryParse(val)==null && (int.parse(val) >0 && int.parse(val) <=150)? "Enter a valid age" : null,
+      onChanged: (val) {
+        setState(() {
+          age = val;
+        });
+      },
+      decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          hintText: 'Age',
+          prefixIcon: Icon(Icons.data_usage),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 2, color: Colors.red),
+          )),
+    );
+    var getGender = DropdownButtonFormField(items:<String>['Male','Female']
+            .map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value, style: TextStyle(color: Colors.black),),
+      );
+    }).toList(),
+      value: gender,
+      onChanged: (val){
+      setState(() {
+        gender=val;
+      });
+      },
+      dropdownColor: Colors.white,
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        filled: true,
+
+      ),
+    );
     var registerButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: Theme.of(context).scaffoldBackgroundColor),
@@ -167,7 +215,7 @@ class _RegisterState extends State<Register> {
             style: TextStyle(fontSize: 12, color: Colors.white)),
         onPressed: () async {
           if (_formkey.currentState.validate()) {
-            dynamic result = await _auth.signUp(first_name, last_name, int.parse(phone_number), email, password);
+            dynamic result = await _auth.signUp(first_name, last_name, int.parse(phone_number), email, password, int.parse(age), gender);
             if(result==null)
               {
               showDialog(
@@ -255,10 +303,18 @@ class _RegisterState extends State<Register> {
                 confirmPasswordHeader,
                 SizedBox(height: 10.0),
                 confirmPassword,
+                SizedBox(height: 20.0),
+                ageHeader,
+                SizedBox(height: 10.0),
+                getAge,
                 SizedBox(height: 20),
                 phoneNumberHeader,
                 SizedBox(height: 10.0),
                 getPhoneNumber,
+                SizedBox(height: 10.0),
+                genderHeader,
+                SizedBox(height: 10.0),
+                getGender,
                 SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   registerButton,

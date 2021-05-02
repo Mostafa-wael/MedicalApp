@@ -8,12 +8,13 @@ class AuthenticateSerivice {
     return _auth.authStateChanges();
   }
 
-  Future signUp(String first, String last, int phone,String email, String password) async {
+  Future signUp(String first, String last, int phone,String email, String password, int age, String gender) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await DatabaseService(userID:result.user.uid).addUserData(first, last, phone, email);
+      await DatabaseService(userID:result.user.uid).addUserData(first, last, phone, email, age, gender);
+      await DatabaseService(userID: result.user.uid).addMedicalRecord("test", "test", ["test","test","test"]);
       return result.user;
     } catch (e) {
       print(e.toString());
