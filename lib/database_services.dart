@@ -30,11 +30,11 @@ class DatabaseService{
 
   }
 
-  Future getUserData(String userID) async
+  Future<Map<String,dynamic>> getUserData(String userID)async
   {
     var docRef = patientCollection.doc(userID);
     Map<String,dynamic> result;
-    docRef.get().then((doc) => (){
+    await docRef.get().then((doc) => (){
       if(doc.exists) result = doc.data();
     }).catchError((error) => () {
       print(error.toString());
@@ -60,11 +60,11 @@ class DatabaseService{
   }
 
   // Function that gets medical records of specific user
-  Future<QuerySnapshot> getMedicalRecords(String userID)
+  Future<QuerySnapshot> getMedicalRecords(String userID) async
   {
     var cRef = patientCollection.doc(userID).collection('Medical History');
     dynamic result;
-    cRef.get().then((collection) => (){
+    await cRef.get().then((collection) => (){
       result = collection;
     }).catchError((onError) =>(){
       print(onError.toString());
