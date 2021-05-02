@@ -3,6 +3,8 @@ import 'package:ruhack/Register.dart';
 import 'package:ruhack/authenticate_services.dart';
 
 class SignIn extends StatefulWidget {
+  final Function toggle;
+  SignIn({this.toggle});
   @override
   _SignInState createState() => _SignInState();
 }
@@ -121,10 +123,7 @@ class _SignInState extends State<SignIn> {
         actions: [
           TextButton.icon(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Register()),
-              );
+             widget.toggle();
             },
             icon: Icon(Icons.app_registration),
             label: Text('Not a member?'),

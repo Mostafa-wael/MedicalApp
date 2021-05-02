@@ -18,6 +18,7 @@ class _profileState extends State<Profile> {
   final String phoneNumber = "011";
   final String gender = "Male";
   final notes = [];
+  final _auth = AuthenticateSerivice();
   //********************************
   @override
   Widget build(BuildContext context) {
@@ -80,92 +81,99 @@ class _profileState extends State<Profile> {
     );
 
     //********************************
-    return StreamProvider<User>.value(
-      value: AuthenticateSerivice().user,
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        //************
-        appBar: AppBar(
-          leading: Icon(Icons.medical_services),
-          title: Text('Medical App', style: scaffoldTextStyle),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0.0,
-        ),
-        //************
-        body: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            Center(
-              child: circleAvatar,
-            ),
-            nameHeader,
-            SizedBox(height: 10.0),
-            nameData,
-            SizedBox(height: 20.0),
-            ageHeader,
-            SizedBox(height: 10.0),
-            ageData,
-            SizedBox(height: 20.0),
-            phoneNumberHeader,
-            SizedBox(height: 10.0),
-            phoneNumberData,
-            SizedBox(height: 20.0),
-            genderHeader,
-            SizedBox(height: 10.0),
-            genderData,
-            SizedBox(height: 20.0),
-            notesHeader,
-            SizedBox(height: 10.0),
-            notesData,
-            SizedBox(height: 20.0),
-          ],
-        ),
-        //************
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          //************
-          child: Text(
-            '!',
-            style: scaffoldTextStyle,
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      //************
+      appBar: AppBar(
+        leading: Icon(Icons.medical_services),
+        title: Text('Medical App', style: scaffoldTextStyle),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0.0,
+        actions: [
+          TextButton.icon(
+              onPressed: () async {
+                await _auth.logOut();
+              },
+              icon: Icon(Icons.logout),
+              label: Text(
+                'Log Out'
+              ), style: TextButton.styleFrom(primary: Colors.white))
+        ],
+      ),
+      //************
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: [
+          Center(
+            child: circleAvatar,
           ),
-          //************
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => History()),
-            );
-
-            // setState(() {});
-            // showDialog(
-            //     context: context,
-            //     builder: (BuildContext context) => new AlertDialog(
-            //           title: new Icon(
-            //             Icons.all_inclusive_sharp,
-            //             color: Theme.of(context).scaffoldBackgroundColor,
-            //           ),
-            //           content: new Text(
-            //             'YOU ARE GREAT!',
-            //             textAlign: TextAlign.center,
-            //             style: TextStyle(
-            //               letterSpacing: 2.0,
-            //               color: Theme.of(context).scaffoldBackgroundColor,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //           actions: <Widget>[
-            //             new IconButton(
-            //                 icon: new Icon(
-            //                   Icons.close,
-            //                   color: Theme.of(context).scaffoldBackgroundColor,
-            //                 ),
-            //                 onPressed: () {
-            //                   Navigator.pop(context);
-            //                 })
-            //           ],
-            //         ));
-          },
+          nameHeader,
+          SizedBox(height: 10.0),
+          nameData,
+          SizedBox(height: 20.0),
+          ageHeader,
+          SizedBox(height: 10.0),
+          ageData,
+          SizedBox(height: 20.0),
+          phoneNumberHeader,
+          SizedBox(height: 10.0),
+          phoneNumberData,
+          SizedBox(height: 20.0),
+          genderHeader,
+          SizedBox(height: 10.0),
+          genderData,
+          SizedBox(height: 20.0),
+          notesHeader,
+          SizedBox(height: 10.0),
+          notesData,
+          SizedBox(height: 20.0),
+        ],
+      ),
+      //************
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        //************
+        child: Text(
+          '!',
+          style: scaffoldTextStyle,
         ),
+        //************
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => History()),
+          );
+
+          // setState(() {});
+          // showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) => new AlertDialog(
+          //           title: new Icon(
+          //             Icons.all_inclusive_sharp,
+          //             color: Theme.of(context).scaffoldBackgroundColor,
+          //           ),
+          //           content: new Text(
+          //             'YOU ARE GREAT!',
+          //             textAlign: TextAlign.center,
+          //             style: TextStyle(
+          //               letterSpacing: 2.0,
+          //               color: Theme.of(context).scaffoldBackgroundColor,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //           actions: <Widget>[
+          //             new IconButton(
+          //                 icon: new Icon(
+          //                   Icons.close,
+          //                   color: Theme.of(context).scaffoldBackgroundColor,
+          //                 ),
+          //                 onPressed: () {
+          //                   Navigator.pop(context);
+          //                 })
+          //           ],
+          //         ));
+        },
       ),
     );
   }

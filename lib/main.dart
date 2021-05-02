@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ruhack/Demo.dart';
+import 'package:ruhack/MainSxreen.dart';
 import 'Register.dart';
 import 'SignIn.dart';
 import 'profile.dart';
@@ -51,24 +53,17 @@ class firstTestPage extends StatelessWidget {
             );
           },
         ),
+
         ElevatedButton(
-          child: Text('Open Sign-in'),
+          child: Text('Demo'),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SignIn()),
-            );
-          },
-        ),
-        ElevatedButton(
-          child: Text('Open Register'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Register()),
+              MaterialPageRoute(builder: (context) => Demo()),
             );
           },
         )
+
       ]),
     );
   }
