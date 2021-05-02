@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ruhack/Register.dart';
+import 'package:ruhack/authenticate_services.dart';
 
 class SignIn extends StatefulWidget {
-  final Function toggleView;
-  SignIn({this.toggleView});
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -11,6 +10,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   String email, password;
   bool visible = true;
+  final _auth = AuthenticateSerivice();
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -76,9 +76,36 @@ class _SignInState extends State<SignIn> {
           Text('Sign in', style: TextStyle(fontSize: 12, color: Colors.white)),
       onPressed: () async {
         if (_formkey.currentState.validate()) {
-          print('validate');
-        } else {
-          print('error');
+          dynamic result = await _auth.logIn(email, password);
+          if(result==null){
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => new AlertDialog(
+                  title: new Icon(
+                    Icons.error,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  content: new Text(
+                    'Invalid User Credentials',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      letterSpacing: 2.0,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    new IconButton(
+                        icon: new Icon(
+                          Icons.close,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
+                  ],
+                ));
+          }
         }
       },
     );
@@ -94,7 +121,10 @@ class _SignInState extends State<SignIn> {
         actions: [
           TextButton.icon(
             onPressed: () {
-              widget.toggleView();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Register()),
+              );
             },
             icon: Icon(Icons.app_registration),
             label: Text('Not a member?'),

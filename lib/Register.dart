@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ruhack/SignIn.dart';
+import 'package:ruhack/authenticate_services.dart';
 
 class Register extends StatefulWidget {
-  final Function toggleView;
-  Register({this.toggleView});
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -11,6 +11,7 @@ class _RegisterState extends State<Register> {
   // ignore: non_constant_identifier_names
   String first_name, last_name, email, password, confirm_pass, phone_number;
   bool visible = true;
+  final _auth = AuthenticateSerivice();
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -160,11 +161,41 @@ class _RegisterState extends State<Register> {
             style: TextStyle(fontSize: 12, color: Colors.white)),
         onPressed: () async {
           if (_formkey.currentState.validate()) {
-            print('validate');
-          } else {
-            print('error');
+            dynamic result = await _auth.signUp(first_name, last_name, int.parse(phone_number), email, password);
+            if(result==null)
+              {
+              showDialog(
+              context: context,
+              builder: (BuildContext context) => new AlertDialog(
+              title: new Icon(
+              Icons.error,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              content: new Text(
+                'Please, Enter a valid email address\n Email is invalid or already used',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+              letterSpacing: 2.0,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              fontWeight: FontWeight.bold,
+              ),
+              ),
+              actions: <Widget>[
+              new IconButton(
+              icon: new Icon(
+              Icons.close,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              onPressed: () {
+              Navigator.pop(context);
+              })
+              ],
+              ));
+
+                }
           }
-        });
+          }
+        );
     //********************************
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -177,7 +208,10 @@ class _RegisterState extends State<Register> {
         actions: [
           TextButton.icon(
             onPressed: () {
-              widget.toggleView();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignIn()),
+              );
             },
             icon: Icon(Icons.login),
             label: Text('Already a member?'),

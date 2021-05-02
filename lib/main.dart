@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'Authenticate.dart';
 import 'Register.dart';
 import 'SignIn.dart';
 import 'profile.dart';
 
-void main() {
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     theme: ThemeData(
       // Define the default brightness and colors.
@@ -45,15 +48,6 @@ class firstTestPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Profile()),
-            );
-          },
-        ),
-        ElevatedButton(
-          child: Text('Open Authenticate'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Authenticate()),
             );
           },
         ),

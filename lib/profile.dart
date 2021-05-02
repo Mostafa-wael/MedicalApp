@@ -77,6 +77,7 @@ class _profileState extends State<Profile> {
       notes.join(", "),
       style: dataTextStyle,
     );
+
     //********************************
     return StreamProvider<User>.value(
       value: AuthenticateSerivice().user,
