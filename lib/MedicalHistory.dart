@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'Receipt.dart';
 import 'ReceiptCard.dart';
+import 'AddHistory.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 
 class History extends StatefulWidget {
   @override
@@ -61,14 +66,20 @@ class _HistoryState extends State<History> {
                   setState(() {
                     cards.remove(receipt);
                   });
-                }
+                },
+              buildcontext: context
             );
           }).toList(),
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {} ,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddHistory()),
+          );
+        } ,
         child: Text("Add"),
         backgroundColor: Colors.lightBlueAccent[600],
       ),
