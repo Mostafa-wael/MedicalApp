@@ -24,11 +24,9 @@ class _profileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     DatabaseService db = DatabaseService();
-    int age = 0;
-    String phoneNumber = "";
-    String gender = "";
-    String guestID = "";
-    bool tempBoolean = false;
+    final int age = 21;
+    final String phoneNumber = "011";
+    final String gender = "Male";
     final _auth = AuthenticateSerivice();
     // text style
     var dataTextStyle = Theme.of(context).textTheme.bodyText2;
@@ -128,59 +126,21 @@ class _profileState extends State<Profile> {
                                   builder: (context) => History()))
                         }),
                 SizedBox(height: 20.0),
-                medicalHistoryButton("another One Medical History", () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => new AlertDialog(
-                            title: new Icon(
-                              Icons.medical_services,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            content: Column(
-                              children: [
-                                Text(
-                                  'Enter the User ID',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    letterSpacing: 2.0,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextField(onChanged: (val) {
-                                  guestID = val;
-                                }),
-                                medicalHistoryButton("Submit", () {
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => History()));
-                                })
-                              ],
-                            ),
-                            actions: <Widget>[
-                              new IconButton(
-                                  icon: new Icon(
-                                    Icons.close,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  })
-                            ],
-                          ));
-
-                  setState(() {});
-                })
+                medicalHistoryButton(
+                    "another One Medical History",
+                    () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => History()))
+                        }),
               ],
             );
           } else
             return Text('loading');
         },
       ),
+      //************
     );
   }
 }
