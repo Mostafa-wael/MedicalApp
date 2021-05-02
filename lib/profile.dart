@@ -12,20 +12,22 @@ class Profile extends StatefulWidget {
   Profile({this.userID});
 
   @override
-  _profileState createState() => _profileState();
+  _profileState createState() => _profileState(userID: this.userID);
 }
 
 class _profileState extends State<Profile> {
   // data
   //Getting data from the database
-  final String name = "Mostafa Wael";
-  final int age = 21;
-  final String phoneNumber = "011";
-  final String gender = "Male";
-  final _auth = AuthenticateSerivice();
+  final String userID;
+  _profileState({this.userID});
   //********************************
   @override
   Widget build(BuildContext context) {
+    DatabaseService db = DatabaseService();
+    final int age = 21;
+    final String phoneNumber = "011";
+    final String gender = "Male";
+    final _auth = AuthenticateSerivice();
     // text style
     var dataTextStyle = Theme.of(context).textTheme.bodyText2;
     var headerTextStyle = Theme.of(context).textTheme.subtitle2;
@@ -54,10 +56,10 @@ class _profileState extends State<Profile> {
       style: headerTextStyle,
     );
     // data
-    var nameData = Text(
-      name,
-      style: dataTextStyle,
-    );
+    Widget TextTemp(String text)
+    {
+      return Text(text, style: dataTextStyle);
+    }
     var ageData = Text(
       age.toString(),
       style: dataTextStyle,
@@ -91,29 +93,43 @@ class _profileState extends State<Profile> {
         ],
       ),
       //************
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: [
-          Center(
-            child: circleAvatar,
-          ),
-          nameHeader,
-          SizedBox(height: 10.0),
-          nameData,
-          SizedBox(height: 20.0),
-          ageHeader,
-          SizedBox(height: 10.0),
-          ageData,
-          SizedBox(height: 20.0),
-          phoneNumberHeader,
-          SizedBox(height: 10.0),
-          phoneNumberData,
-          SizedBox(height: 20.0),
-          genderHeader,
-          SizedBox(height: 10.0),
-          genderData,
-          SizedBox(height: 20.0),
-        ],
+      body: FutureBuilder<DocumentSnapshot>(
+
+        future: db.getUserData(userID),
+        builder: (context,AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if(snapshot.hasData)
+            {
+              Map<String,dynamic> data = snapshot.data.data();
+              return ListView(
+                padding: const EdgeInsets.all(8),
+                children: [
+                  Center(
+                    child: circleAvatar,
+                  ),
+                  nameHeader,
+                  SizedBox(height: 10.0),
+                  TextTemp(data["first_name"] + " " + data["last_name"]),
+                  SizedBox(height: 20.0),
+                  ageHeader,
+                  SizedBox(height: 10.0),
+                  TextTemp(data['age'].toString()),
+                  SizedBox(height: 20.0),
+                  phoneNumberHeader,
+                  SizedBox(height: 10.0),
+                  TextTemp(data["phone_num"].toString()),
+                  SizedBox(height: 20.0),
+                  genderHeader,
+                  SizedBox(height: 10.0),
+                  TextTemp(data['gender']),
+                  SizedBox(height: 20.0),
+                ],
+              );
+            }
+          else return Text('loading');
+
+        },
+
+
       ),
       //************
       floatingActionButton: FloatingActionButton(
