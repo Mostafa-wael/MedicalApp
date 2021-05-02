@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'MedicalHistory.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:ruhack/authenticate_services.dart';
 
@@ -17,16 +16,10 @@ class _profileState extends State<Profile> {
   final int age = 21;
   final String phoneNumber = "011";
   final String gender = "Male";
-  final notes = [];
   final _auth = AuthenticateSerivice();
   //********************************
   @override
   Widget build(BuildContext context) {
-    notes.clear();
-    notes.add("1");
-    notes.add("2");
-    notes.add("3");
-    //********************************
     // text style
     var dataTextStyle = Theme.of(context).textTheme.bodyText2;
     var headerTextStyle = Theme.of(context).textTheme.subtitle2;
@@ -54,10 +47,6 @@ class _profileState extends State<Profile> {
       'Gender',
       style: headerTextStyle,
     );
-    var notesHeader = Text(
-      'Additional Notes',
-      style: headerTextStyle,
-    );
     // data
     var nameData = Text(
       name,
@@ -75,11 +64,6 @@ class _profileState extends State<Profile> {
       gender,
       style: dataTextStyle,
     );
-    var notesData = Text(
-      notes.join(", "),
-      style: dataTextStyle,
-    );
-
     //********************************
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -96,9 +80,8 @@ class _profileState extends State<Profile> {
                 await _auth.logOut();
               },
               icon: Icon(Icons.logout),
-              label: Text(
-                'Log Out'
-              ), style: TextButton.styleFrom(primary: Colors.white))
+              label: Text('Log Out'),
+              style: TextButton.styleFrom(primary: Colors.white))
         ],
       ),
       //************
@@ -124,20 +107,11 @@ class _profileState extends State<Profile> {
           SizedBox(height: 10.0),
           genderData,
           SizedBox(height: 20.0),
-          notesHeader,
-          SizedBox(height: 10.0),
-          notesData,
-          SizedBox(height: 20.0),
         ],
       ),
       //************
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        //************
-        child: Text(
-          '!',
-          style: scaffoldTextStyle,
-        ),
         //************
         onPressed: () {
           Navigator.push(
