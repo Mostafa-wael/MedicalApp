@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
     var getPhoneNumber = TextFormField(
       keyboardType: TextInputType.number,
       validator: (val) =>
-          val.length < 11 ? "Enter a correct phone number" : null,
+          val.length < 11 || int.tryParse(val)==null? "Enter a correct phone number" : null,
       onChanged: (val) {
         setState(() {
           phone_number = val;

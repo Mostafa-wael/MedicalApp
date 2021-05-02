@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:ruhack/authenticate_services.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -75,84 +78,87 @@ class _profileState extends State<Profile> {
       style: dataTextStyle,
     );
     //********************************
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      //************
-      appBar: AppBar(
-        leading: Icon(Icons.medical_services),
-        title: Text('Medical App', style: scaffoldTextStyle),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
-      ),
-      //************
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: [
-          Center(
-            child: circleAvatar,
-          ),
-          nameHeader,
-          SizedBox(height: 10.0),
-          nameData,
-          SizedBox(height: 20.0),
-          ageHeader,
-          SizedBox(height: 10.0),
-          ageData,
-          SizedBox(height: 20.0),
-          phoneNumberHeader,
-          SizedBox(height: 10.0),
-          phoneNumberData,
-          SizedBox(height: 20.0),
-          genderHeader,
-          SizedBox(height: 10.0),
-          genderData,
-          SizedBox(height: 20.0),
-          notesHeader,
-          SizedBox(height: 10.0),
-          notesData,
-          SizedBox(height: 20.0),
-        ],
-      ),
-      //************
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    return StreamProvider<User>.value(
+      value: AuthenticateSerivice().user,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         //************
-        child: Text(
-          '!',
-          style: scaffoldTextStyle,
+        appBar: AppBar(
+          leading: Icon(Icons.medical_services),
+          title: Text('Medical App', style: scaffoldTextStyle),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0.0,
         ),
         //************
-        onPressed: () {
-          setState(() {});
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => new AlertDialog(
-                    title: new Icon(
-                      Icons.all_inclusive_sharp,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    content: new Text(
-                      'YOU ARE GREAT!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        letterSpacing: 2.0,
+        body: ListView(
+          padding: const EdgeInsets.all(8),
+          children: [
+            Center(
+              child: circleAvatar,
+            ),
+            nameHeader,
+            SizedBox(height: 10.0),
+            nameData,
+            SizedBox(height: 20.0),
+            ageHeader,
+            SizedBox(height: 10.0),
+            ageData,
+            SizedBox(height: 20.0),
+            phoneNumberHeader,
+            SizedBox(height: 10.0),
+            phoneNumberData,
+            SizedBox(height: 20.0),
+            genderHeader,
+            SizedBox(height: 10.0),
+            genderData,
+            SizedBox(height: 20.0),
+            notesHeader,
+            SizedBox(height: 10.0),
+            notesData,
+            SizedBox(height: 20.0),
+          ],
+        ),
+        //************
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          //************
+          child: Text(
+            '!',
+            style: scaffoldTextStyle,
+          ),
+          //************
+          onPressed: () {
+            setState(() {});
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => new AlertDialog(
+                      title: new Icon(
+                        Icons.all_inclusive_sharp,
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    actions: <Widget>[
-                      new IconButton(
-                          icon: new Icon(
-                            Icons.close,
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })
-                    ],
-                  ));
-        },
+                      content: new Text(
+                        'YOU ARE GREAT!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          letterSpacing: 2.0,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      actions: <Widget>[
+                        new IconButton(
+                            icon: new Icon(
+                              Icons.close,
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                      ],
+                    ));
+          },
+        ),
       ),
     );
   }
