@@ -43,6 +43,7 @@ class _RegisterState extends State<Register> {
     //********************************
     // Text Fields
     var getFirstName = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.text,
       validator: (val) => val.isEmpty ? "Enter your name" : null,
       onChanged: (val) {
@@ -60,6 +61,7 @@ class _RegisterState extends State<Register> {
           )),
     );
     var getLastName = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.text,
       validator: (val) => val.isEmpty ? "Enter your last name" : null,
       onChanged: (val) {
@@ -77,6 +79,7 @@ class _RegisterState extends State<Register> {
           )),
     );
     var getEmail = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.emailAddress,
       validator: (val) => val.isEmpty ? "Enter your email" : null,
       onChanged: (val) {
@@ -94,6 +97,7 @@ class _RegisterState extends State<Register> {
           )),
     );
     var getPassword = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.text,
       validator: (val) => val.isEmpty ? "Enter your password" : null,
       onChanged: (val) {
@@ -119,6 +123,7 @@ class _RegisterState extends State<Register> {
           )),
     );
     var confirmPassword = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.text,
       validator: (val) =>
           val != password ? "Your passwords do not match" : null,
@@ -137,6 +142,7 @@ class _RegisterState extends State<Register> {
           )),
     );
     var getPhoneNumber = TextFormField(
+      style: TextStyle(color: Colors.black),
       keyboardType: TextInputType.number,
       validator: (val) =>
           val.length < 11 || int.tryParse(val)==null? "Enter a correct phone number" : null,
