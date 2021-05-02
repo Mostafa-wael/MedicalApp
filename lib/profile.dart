@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'MedicalHistory.dart';
 import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
@@ -124,34 +125,39 @@ class _profileState extends State<Profile> {
         ),
         //************
         onPressed: () {
-          setState(() {});
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => new AlertDialog(
-                    title: new Icon(
-                      Icons.all_inclusive_sharp,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    content: new Text(
-                      'YOU ARE GREAT!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        letterSpacing: 2.0,
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      new IconButton(
-                          icon: new Icon(
-                            Icons.close,
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })
-                    ],
-                  ));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => History()),
+          );
+
+          // setState(() {});
+          // showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) => new AlertDialog(
+          //           title: new Icon(
+          //             Icons.all_inclusive_sharp,
+          //             color: Theme.of(context).scaffoldBackgroundColor,
+          //           ),
+          //           content: new Text(
+          //             'YOU ARE GREAT!',
+          //             textAlign: TextAlign.center,
+          //             style: TextStyle(
+          //               letterSpacing: 2.0,
+          //               color: Theme.of(context).scaffoldBackgroundColor,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //           actions: <Widget>[
+          //             new IconButton(
+          //                 icon: new Icon(
+          //                   Icons.close,
+          //                   color: Theme.of(context).scaffoldBackgroundColor,
+          //                 ),
+          //                 onPressed: () {
+          //                   Navigator.pop(context);
+          //                 })
+          //           ],
+          //         ));
         },
       ),
     );
