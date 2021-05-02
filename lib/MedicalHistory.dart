@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Receipt.dart';
 import 'ReceiptCard.dart';
@@ -14,35 +15,11 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
 
-  List<Receipt> cards = [
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now()),
-    Receipt(name:"Osama",date: new DateTime.now())
-  ];
-
+var messagesList;
 
   @override
   Widget build(BuildContext context) {
+    String Uid = Provider.of<User>(context).uid;
     return  Scaffold(
       appBar: AppBar(
         title: Text(
@@ -57,20 +34,47 @@ class _HistoryState extends State<History> {
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent[400],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: cards.map((receipt) {
-            return receiptCard(
-                receipt:receipt,
-                delete: (){
-                  setState(() {
-                    cards.remove(receipt);
-                  });
-                },
-              buildcontext: context
-            );
-          }).toList(),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream:FirebaseFirestore.instance
+                  .collection("patient")
+                  .doc(Uid)
+                  .collection("MedicalHistory")
+                  .snapshots(),
+              builder: (context,AsyncSnapshot<QuerySnapshot> snapshot)
+              {
+                if(!snapshot.hasData || snapshot.data.size==0)
+                {
+
+                  return Center(
+                    child: Text("No History Yet"),
+                  );
+                }
+                else
+                {
+                  messagesList = snapshot.data.docs;
+                  return ListView.builder(
+                    itemBuilder: (context,index)
+                    {
+                      return ListTile(
+                        title: Text(snapshot.data.docs[index]["Title"]),
+                        subtitle:Column(
+                          children: [
+                            Text(snapshot.data.docs[index]["description"]),
+                            Text(snapshot.data.docs[index]["Date"]),
+                          ],
+                        ) ,
+                      );
+                    },
+                    itemCount: snapshot.data.docs.length,
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
 
       floatingActionButton: FloatingActionButton(

@@ -33,7 +33,7 @@ class DatabaseService{
   Future addMedical(String userID,String Title,String date, String description) async
   {
     try {
-      return await patientCollection.doc(userID).collection("MedicalHistory").doc(userID).set({
+      return await patientCollection.doc(userID).collection("MedicalHistory").doc().set({
         "Date": date,
         "Title": Title,
         "description": description,
